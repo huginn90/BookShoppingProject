@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 import static com.iot.bookshoppingproject.R.id.UserText;
 
-public class MainActivity extends AppCompatActivity {
+public class BookList extends AppCompatActivity {
 
     ArrayList<RecycleData> recycleDataSet = new ArrayList<>();
 

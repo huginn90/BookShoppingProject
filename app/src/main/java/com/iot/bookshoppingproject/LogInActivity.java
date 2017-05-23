@@ -44,7 +44,7 @@ public class LogInActivity extends AppCompatActivity {
                         String password = PasswordInput.getText().toString();
                         if(LoginId.equals(userName) && LiginPW.equals(password)){
                             Intent intent = new Intent(getApplicationContext(),
-                                    MainActivity.class
+                                    BookList.class
                             );
                             ContentParcel content3 = new ContentParcel(userName, password);
                             intent.putExtra("title", content3);
@@ -52,7 +52,7 @@ public class LogInActivity extends AppCompatActivity {
                         } else if(executeLogIn(TABLE_NAME, userName, password)){
                             Intent intent = new Intent(
                                     getApplicationContext(),
-                                    MainActivity.class
+                                    BookList.class
                             );
                             ContentParcel content3 = new ContentParcel(userName, password);
                             intent.putExtra("title", content3);
