@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import static com.iot.bookshoppingproject.LogInActivity.LoginId;
 import static com.iot.bookshoppingproject.R.id.UserText;
 
 public class MainActivity extends AppCompatActivity {
@@ -18,6 +19,8 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<RecycleData> recycleDataSet = new ArrayList<>();
 
     TextView textViewTt;
+    String userName;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         textViewTt = (TextView) findViewById(UserText);
         Button button = (Button) findViewById(R.id.bt01);
 
-        if(getTitle().equals("admin")){
+        if(LoginId.equals("admin")){
             textViewTt.setText("관리자");
             button.setVisibility(View.VISIBLE);
         }else {
