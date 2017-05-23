@@ -23,7 +23,7 @@
         <activity android:name=".Revise">
             
         </activity>
-        <activity android:name=".MainActivity">
+        <activity android:name=".BookList">
 
         </activity>
     </application>
