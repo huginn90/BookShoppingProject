@@ -44,7 +44,7 @@ public class LogInActivity extends AppCompatActivity {
                         if(LoginId.equals(userName) && LiginPW.equals(password)){
                             Intent intent = new Intent(
                                     getApplicationContext(),
-                                    SignIn.class
+                                    MainActivity.class
                             );
                             startActivity(intent);
                         } else if(executeLogIn(TABLE_NAME, userName, password)){

@@ -23,6 +23,9 @@
         <activity android:name=".Revise">
             
         </activity>
+        <activity android:name=".MainActivity">
+
+        </activity>
     </application>
 
 </manifest>
