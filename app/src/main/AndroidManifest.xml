@@ -19,6 +19,10 @@
         <activity android:name=".SignIn">
 
         </activity>
+
+        <activity android:name=".Revise">
+            
+        </activity>
     </application>
 
 </manifest>
