@@ -1,5 +1,6 @@
 package com.iot.bookshoppingproject;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -18,21 +19,27 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<RecycleData> recycleDataSet = new ArrayList<>();
 
     TextView textViewTt;
+    String userName;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         textViewTt = (TextView) findViewById(UserText);
         Button button = (Button) findViewById(R.id.bt01);
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        ContentParcel content3 = (ContentParcel) bundle.getParcelable("title");
 
-        if(getTitle().equals("admin")){
-            textViewTt.setText("관리자");
+        if(content3.getTitle().equals("admin")){
+            textViewTt.setText("[        모           드      -       관           리           자      ]");
             button.setVisibility(View.VISIBLE);
         }else {
-            textViewTt.setText("사용자");
-            button.setVisibility(View.VISIBLE);
+            textViewTt.setText("[        모           드      -       사           용           자      ]");
+            button.setVisibility(View.INVISIBLE);
         }
 
 
