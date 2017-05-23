@@ -16,10 +16,12 @@ import android.widget.Toast;
  */
 
 public class LogInActivity extends AppCompatActivity {
+
     private static String DATABASE_NAME = "store";
     private static String TABLE_NAME = "customer";
     public static final String LoginId = "admin";
     public static final String LiginPW = "admin";
+
     EditText NameInput;
     EditText PasswordInput;
     SQLiteDatabase db;
@@ -29,6 +31,7 @@ public class LogInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
         openDatabase(DATABASE_NAME);
+
         NameInput = (EditText)findViewById(R.id.userNameInput);
         PasswordInput = (EditText)findViewById(R.id.passwordInput);
 
@@ -37,22 +40,24 @@ public class LogInActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        String userName =
-                                NameInput.getText().toString();
-                        String password =
-                                PasswordInput.getText().toString();
+                        String userName = NameInput.getText().toString();
+                        String password = PasswordInput.getText().toString();
                         if(LoginId.equals(userName) && LiginPW.equals(password)){
-                            Intent intent = new Intent(
-                                    getApplicationContext(),
+                            Intent intent = new Intent(getApplicationContext(),
                                     MainActivity.class
                             );
+                            ContentParcel content3 = new ContentParcel(userName, password);
+                            intent.putExtra("title", content3);
                             startActivity(intent);
                         } else if(executeLogIn(TABLE_NAME, userName, password)){
                             Intent intent = new Intent(
                                     getApplicationContext(),
-                                    SignIn.class
+                                    MainActivity.class
                             );
+                            ContentParcel content3 = new ContentParcel(userName, password);
+                            intent.putExtra("title", content3);
                             startActivity(intent);
+                         //   startActivity(intent);
                         } else{
                             Toast.makeText(
                                     getApplicationContext(),
