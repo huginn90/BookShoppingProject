@@ -17,7 +17,7 @@ import static java.sql.DriverManager.println;
  * Created by test2 on 2017-05-22.
  */
 
-public class SignIn extends AppCompatActivity{
+public class SignInActivity extends AppCompatActivity{
     private static String DATABASE_NAME = "store";
     private static String TABLE_NAME = "customer";
     private static int DATABASE_VERSION = 6;

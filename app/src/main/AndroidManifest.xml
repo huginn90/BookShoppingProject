@@ -23,14 +23,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SignIn">
+        <activity android:name=".SignInActivity">
 
         </activity>
-
-        <activity android:name=".Revise">
+        <activity android:name=".BookListActivity">
 
         </activity>
-        <activity android:name=".BookList">
+        <activity android:name=".AddBookActivity">
 
         </activity>
     </application>

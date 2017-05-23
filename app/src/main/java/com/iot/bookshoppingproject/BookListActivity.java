@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 import static com.iot.bookshoppingproject.R.id.UserText;
 
-public class BookList extends AppCompatActivity {
+public class BookListActivity extends AppCompatActivity {
 
     ArrayList<RecycleData> recycleDataSet = new ArrayList<>();
 
@@ -30,7 +30,7 @@ public class BookList extends AppCompatActivity {
 
         textViewTt = (TextView) findViewById(UserText);
         Button button = (Button) findViewById(R.id.bt01);
-        Intent intent = getIntent();
+        final Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         ContentParcel content3 = (ContentParcel) bundle.getParcelable("title");
 
@@ -41,6 +41,18 @@ public class BookList extends AppCompatActivity {
             textViewTt.setText("[        모           드      -       사           용           자      ]");
             button.setVisibility(View.INVISIBLE);
         }
+
+        button.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intentAddBook = new Intent(
+                                getApplicationContext(), AddBookActivity.class
+                        );
+                        startActivityForResult(intentAddBook, 100);
+                    }
+                }
+        );
 
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.Recyclerview);

@@ -131,8 +131,8 @@ public class CameraFragment extends Fragment {
 
         mSurface = (CameraSurface) fragment.findViewById(R.id.previewFrame);
         mShutter = (Button) fragment.findViewById(R.id.button_capture);
-
         mShutter.setOnClickListener(new Button.OnClickListener() {
+
             public void onClick(View v) {
                 mSurface.mCamera.autoFocus(mAutoFocus);
 //                mSurface.mCamera.takePicture(null, null, mPicture);
