@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -35,11 +35,11 @@ public class MainActivity extends AppCompatActivity {
         ContentParcel content3 = (ContentParcel) bundle.getParcelable("title");
 
         if(content3.getTitle().equals("admin")){
-            textViewTt.setText("관           리           자");
+            textViewTt.setText("[        모           드      -       관           리           자      ]");
             button.setVisibility(View.VISIBLE);
         }else {
-            textViewTt.setText("사           용           자");
-            button.setVisibility(View.VISIBLE);
+            textViewTt.setText("[        모           드      -       사           용           자      ]");
+            button.setVisibility(View.INVISIBLE);
         }
 
 

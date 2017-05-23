@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?attr/colorButtonNormal"
     tools:context="com.iot.recyclerviewedit.MainActivity">
 
 
@@ -29,7 +30,7 @@
         android:layout_marginLeft="49dp"
         android:layout_marginRight="49dp"
         android:layout_marginTop="4dp"
-        android:text="등 록"
+        android:text="책     등     록"
         android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.5"

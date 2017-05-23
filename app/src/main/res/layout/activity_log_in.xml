@@ -33,7 +33,7 @@
 
                 <EditText
                     android:id="@+id/userNameInput"
-                    android:layout_width="170dp"
+                    android:layout_width="146dp"
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:inputType="textPersonName"/>
@@ -55,7 +55,7 @@
 
                 <EditText
                     android:id="@+id/passwordInput"
-                    android:layout_width="170dp"
+                    android:layout_width="146dp"
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:inputType="textPassword" />
