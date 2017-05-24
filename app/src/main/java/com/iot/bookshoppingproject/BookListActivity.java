@@ -26,10 +26,8 @@ public class BookListActivity extends AppCompatActivity {
     private static String DATABASE_NAME = "store";
     private static String TABLE_NAME = "books";
     TextView textViewTt;
+    String userName;
     SQLiteDatabase db;
-    RecyclerView recyclerView;
-    RecyclerAdapter recyclerAdapter;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,15 +39,17 @@ public class BookListActivity extends AppCompatActivity {
 
         textViewTt = (TextView) findViewById(UserText);
         Button button = (Button) findViewById(R.id.bt01);
+        Button button1 = (Button) findViewById(R.id.button);
+
         final Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         ContentParcel content3 = (ContentParcel) bundle.getParcelable("title");
 
         if(content3.getTitle().equals("admin")){
-            textViewTt.setText("[        모           드      -       관           리           자      ]");
+            textViewTt.setText("[      모           드      -       관           리           자      ]");
             button.setVisibility(View.VISIBLE);
         }else {
-            textViewTt.setText("[        모           드      -       사           용           자      ]");
+            textViewTt.setText("[      모           드      -       사           용           자      ]");
             button.setVisibility(View.INVISIBLE);
         }
 
@@ -65,22 +65,13 @@ public class BookListActivity extends AppCompatActivity {
                 }
         );
 
-        recyclerView = (RecyclerView) findViewById(R.id.Recyclerview);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.Recyclerview);
 
         BooklistSetData(TABLE_NAME);
-        recyclerAdapter = new RecyclerAdapter(bookSet);
-        recyclerView.setAdapter(recyclerAdapter);
+
+        recyclerView.setAdapter(new RecyclerAdapter(bookSet));
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-
-    }
-
-    // 리사이클러뷰 리스트 업데이트를 위한 코드
-    @Override
-    protected void onResume() {
-        super.onResume();
-        bookSet.clear();
-        recyclerAdapter.upDateItemList(BooklistSetData(TABLE_NAME));
     }
 
     private void openDatabase(String DATABASE_NAME){
@@ -116,7 +107,7 @@ public class BookListActivity extends AppCompatActivity {
     }
 
 
-    public ArrayList<Book> BooklistSetData(String TABLE_NAME) {
+    public void BooklistSetData(String TABLE_NAME) {
         String SQL = "select title, price, barcode " + " from " + TABLE_NAME;
         Cursor cursor = db.rawQuery(SQL, null);
 
@@ -126,11 +117,10 @@ public class BookListActivity extends AppCompatActivity {
             String title = cursor.getString(0);
             int price = cursor.getInt(1);
             String barcode = cursor.getString(2);
+            System.out.println("셀렉트 북");
             Book book = new Book(title, price, barcode);
             bookSet.add(book);
         }
-
-        return bookSet;
     }
 }
 
