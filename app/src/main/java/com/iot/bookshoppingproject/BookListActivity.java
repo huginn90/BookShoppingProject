@@ -28,6 +28,7 @@ public class BookListActivity extends AppCompatActivity {
     TextView textViewTt;
     String userName;
     SQLiteDatabase db;
+    RecyclerAdapter recyclerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +40,6 @@ public class BookListActivity extends AppCompatActivity {
 
         textViewTt = (TextView) findViewById(UserText);
         Button button = (Button) findViewById(R.id.bt01);
-        Button button1 = (Button) findViewById(R.id.button);
 
         final Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
@@ -69,10 +69,20 @@ public class BookListActivity extends AppCompatActivity {
 
         BooklistSetData(TABLE_NAME);
 
-        recyclerView.setAdapter(new RecyclerAdapter(bookSet));
+        recyclerAdapter = new RecyclerAdapter(bookSet);
+        recyclerView.setAdapter(recyclerAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        bookSet.clear();
+        recyclerAdapter.upDateItemList(BooklistSetData(TABLE_NAME));
+    }
+
+
 
     private void openDatabase(String DATABASE_NAME){
         try{
@@ -107,7 +117,7 @@ public class BookListActivity extends AppCompatActivity {
     }
 
 
-    public void BooklistSetData(String TABLE_NAME) {
+    public ArrayList<Book> BooklistSetData(String TABLE_NAME) {
         String SQL = "select title, price, barcode " + " from " + TABLE_NAME;
         Cursor cursor = db.rawQuery(SQL, null);
 
@@ -121,6 +131,17 @@ public class BookListActivity extends AppCompatActivity {
             Book book = new Book(title, price, barcode);
             bookSet.add(book);
         }
+
+        return bookSet;
+    }
+
+    public void OnButtonArrayClicked(View v){
+
+        Intent myIntent = new Intent(
+                getApplicationContext(),
+                ClientBuyActivity.class
+        );
+        startActivity(myIntent);
     }
 }
 
