@@ -21,7 +21,8 @@ import static java.sql.DriverManager.println;
 
 public class BookListActivity extends AppCompatActivity {
 
-    ArrayList<RecycleData> recycleDataSet = new ArrayList<>();
+    ArrayList<Book> bookSet = new ArrayList<>();
+
     private static String DATABASE_NAME = "store";
     private static String TABLE_NAME = "books";
     TextView textViewTt;
@@ -65,9 +66,9 @@ public class BookListActivity extends AppCompatActivity {
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.Recyclerview);
 
-        InsertData(TABLE_NAME, 15);
+        BooklistSetData(TABLE_NAME);
 
-        recyclerView.setAdapter(new RecyclerAdapter(recycleDataSet));
+        recyclerView.setAdapter(new RecyclerAdapter(bookSet));
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
@@ -96,9 +97,9 @@ public class BookListActivity extends AppCompatActivity {
         try {
             db.execSQL("create table if not exists " + TABLE_NAME +
                     " ( " +
-                    " title text PRIMARY KEY, " +
-                    " price text, " +
-                    " barcode text);"
+                    " title text, " +
+                    " price int, " +
+                    " barcode text PRIMARY KEY);"
             );
         } catch (Exception e){
             e.printStackTrace();
@@ -108,16 +109,19 @@ public class BookListActivity extends AppCompatActivity {
     }
 
 
-    public void InsertData(String TABLE_NAME, int i) {
-       for (int j = 0; j < i; j++) {
-           String SQL = "select price " + " from " + TABLE_NAME;
-           Cursor cursor = db.rawQuery(SQL, null);
-//           int recordCount = cursor.getCount();
-           cursor.moveToNext();
-           String title = cursor.getString(0);
-           RecycleData recycleData = new RecycleData();
-           recycleData.setTextview_text(title);
-           recycleDataSet.add(recycleData);
+    public void BooklistSetData(String TABLE_NAME) {
+        String SQL = "select title, price, barcode " + " from " + TABLE_NAME;
+        Cursor cursor = db.rawQuery(SQL, null);
+
+        for (int i = 0; i < cursor.getCount(); i++) {
+            cursor.moveToNext();
+
+            String title = cursor.getString(0);
+            int price = cursor.getInt(1);
+            String barcode = cursor.getString(2);
+            System.out.println("셀렉트 북");
+            Book book = new Book(title, price, barcode);
+            bookSet.add(book);
         }
     }
 }

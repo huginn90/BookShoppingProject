@@ -13,10 +13,10 @@ import java.util.List;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.RecycleViewHolder> {
 
-    List<RecycleData> RecycleDataSet = new ArrayList();
+    List<Book> bookSet = new ArrayList();
 
-    public RecyclerAdapter(List<RecycleData> recycleDataSet) {
-        RecycleDataSet = recycleDataSet;
+    public RecyclerAdapter(List<Book> bookSet) {
+        this.bookSet = bookSet;
     }
 
     @Override
@@ -27,15 +27,15 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
 
     @Override
     public void onBindViewHolder(final RecycleViewHolder holder, final int position) {
-        RecycleData recycleData = RecycleDataSet.get(position);
-        holder.button.setText("pos"+position);
-        holder.textView.setText(recycleData.textview_text);
+        Book book = bookSet.get(position);
+        holder.button.setText(book.getBookTitle());
+        holder.textView.setText(book.getBookPrice()+" 원");
 
     }
 
     @Override
     public int getItemCount() {
-        return RecycleDataSet.size();
+        return bookSet.size();
     }
 
     class RecycleViewHolder extends RecyclerView.ViewHolder {

@@ -1,7 +1,9 @@
 package com.iot.bookshoppingproject;
 
-
 import android.app.Activity;
+
+
+
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -37,25 +39,28 @@ public class CameraActivity extends Activity {
         setContentView(R.layout.activity_camera);
 
         mSurface = (MyCameraSurface)findViewById(R.id.previewFrame);
-        mShutter = (Button)findViewById(R.id.button1);
-        mShutter.setOnClickListener(new Button.OnClickListener() {
+        mShutter = (Button)findViewById(R.id.button_capture);
 
+        Button buttonExit = (Button) findViewById(R.id.button_exit);
+
+        buttonExit.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        finish();
+                    }
+                }
+        );
+
+        mShutter.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
                 // 사진을 촬영
                 mSurface.mCamera.autoFocus(mAutoFocus);
 
-                if(barcodeNumber != null) {
-                    Intent intentBarcode = new Intent(getApplicationContext(), BarcodeActivity.class);
-                    intentBarcode.putExtra("barcodeNumber", barcodeNumber);
-                    startActivity(intentBarcode);
-                }
-                else {
-                    Toast.makeText(getApplicationContext(), "다시 촬영", Toast.LENGTH_LONG).show();
-                }
-
-
             }
         });
+
+
 
         //저장할 공간 /mnt/sdcard/CameraTest 이렇게 폴더 안에 파일이 생성된다
         mRootPath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + PICFOLDER;
@@ -106,7 +111,17 @@ public class CameraActivity extends Activity {
 
             Toast.makeText(getApplicationContext(), "사진이 저장 되었습니다"+file.getAbsolutePath(), Toast.LENGTH_LONG).show();
             camera.startPreview();
+
             barcodeNumber = DecodeBarcode(file.getAbsolutePath());
+
+            if(barcodeNumber != null) {
+                Intent intentBarcode = new Intent(getApplicationContext(), BarcodeActivity.class);
+                intentBarcode.putExtra("barcodeNumber", barcodeNumber);
+                startActivity(intentBarcode);
+            }
+            else {
+                Toast.makeText(getApplicationContext(), "다시 촬영", Toast.LENGTH_LONG).show();
+            }
 
         }
 
