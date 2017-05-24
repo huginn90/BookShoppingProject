@@ -87,7 +87,15 @@ public class WebScraping {
                 getBookInfoUseURL(url);
             }
         };
+
         thread.start();
+
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
     }
 
 }

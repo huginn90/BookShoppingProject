@@ -82,12 +82,9 @@ public class BookListActivity extends AppCompatActivity {
                     public void onItemClick(View v, int position) {
                         Intent intentitem = new Intent(getApplicationContext(), ClientBuyActivity.class);
                         startActivity(intentitem);
-
                     }
-
                     @Override
                     public void onItemLongClick(View v, int position) {
-
                     }
                 }));
 
@@ -151,6 +148,7 @@ public class BookListActivity extends AppCompatActivity {
         return bookSet;
     }
 
+    // 아이템 클릭 리스너 코드부분
     public static class RecycleViewItemClickListener extends RecyclerView.SimpleOnItemTouchListener {
 
         private OnItemClickListener mListener;

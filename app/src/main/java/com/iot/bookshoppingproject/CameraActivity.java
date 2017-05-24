@@ -60,8 +60,6 @@ public class CameraActivity extends Activity {
             }
         });
 
-
-
         //저장할 공간 /mnt/sdcard/CameraTest 이렇게 폴더 안에 파일이 생성된다
         mRootPath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + PICFOLDER;
         File fRoot = new File(mRootPath);
@@ -127,14 +125,11 @@ public class CameraActivity extends Activity {
 
     };
 
+    // 저장된 이미지경로에서 이미지 읽어옴.
     public String DecodeBarcode(String imagePath) {
-        // 사진찍은 이미지 저장경로
-//        String imagePath = "/mnt/sdcard/CameraTest/save.jpg";
-        // drawable에 사진이 있는 경우
-//                        Bitmap myBitmap = BitmapFactory.decodeResource(getApplicationContext().getResources(), R.drawable.barcode);
+
         Bitmap myBitmap = BitmapFactory.decodeFile(imagePath);
 //        myImageView.setImageBitmap(myBitmap);
-
         BarcodeDetector detector =
                 new BarcodeDetector.Builder(getApplicationContext())
                         .setBarcodeFormats(Barcode.QR_CODE | Barcode.EAN_13 | Barcode.EAN_8 | Barcode.CODE_39 | Barcode.CODE_93 | Barcode.CODE_128)
@@ -150,8 +145,6 @@ public class CameraActivity extends Activity {
         try {
             Barcode thisCode = barcodes.valueAt(0);
             return thisCode.rawValue;
-//            TextView txtView = (TextView) findViewById(R.id.txtContent);
-//            txtView.setText(thisCode.rawValue);
         }
         catch (Exception e) {
             e.printStackTrace();
