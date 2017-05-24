@@ -14,6 +14,8 @@ import java.util.regex.Pattern;
 
 public class WebScraping {
 
+
+
     private String ISBNnumber;
     private String title;
     private int price;
@@ -28,6 +30,10 @@ public class WebScraping {
 
     public int getPrice() {
         return price;
+    }
+
+    public String getISBNnumber() {
+        return ISBNnumber;
     }
 
     private void getBookInfoUseURL(String urlToRead) {
@@ -59,6 +65,7 @@ public class WebScraping {
 
         if (matcher_title.find()) {
             title = matcher_title.group(1);
+            System.out.println("제목 : "+ title);
         }
         else
             System.out.println("매칭 타이틀 없음");
@@ -66,16 +73,17 @@ public class WebScraping {
         if (matcher_price.find()) {
             String a = matcher_price.group(1);
             price = Integer.parseInt(a.replace(",", ""));
+            System.out.println("가격 : "+ price);
         }
         else
             System.out.println("매칭 가격 없음");
 
     }
 
-    public void ThreadForwebconnect() {
+    public void ThreadForwebconnect(final String barcodenumber) {
         Thread thread = new Thread() {
             public void run() {
-                String url = "http://book.daum.net/detail/book.do?bookid=KOR"+ISBNnumber;
+                String url = "http://book.daum.net/detail/book.do?bookid=KOR"+barcodenumber;
                 getBookInfoUseURL(url);
             }
         };
