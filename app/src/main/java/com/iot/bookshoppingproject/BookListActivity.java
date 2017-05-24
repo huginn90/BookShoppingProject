@@ -44,7 +44,7 @@ public class BookListActivity extends AppCompatActivity {
         createTable(TABLE_NAME);
 
         textViewTt = (TextView) findViewById(UserText);
-        Button button = (Button) findViewById(R.id.bt01);
+        Button button = (Button) findViewById(R.id.button_addbook);
         final Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         ContentParcel content3 = (ContentParcel) bundle.getParcelable("title");
@@ -80,7 +80,10 @@ public class BookListActivity extends AppCompatActivity {
                 new RecycleViewItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View v, int position) {
+                        // 상세화면으로 바코드 번호를 넘김.
                         Intent intentitem = new Intent(getApplicationContext(), ClientBuyActivity.class);
+                        Book book = bookSet.get(position);
+                        intentitem.putExtra("barcodeNumber", book.getBookbarcode());
                         startActivity(intentitem);
                     }
                     @Override

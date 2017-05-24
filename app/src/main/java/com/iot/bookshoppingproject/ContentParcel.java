@@ -10,25 +10,25 @@ import android.os.Parcelable;
 public class ContentParcel implements Parcelable {
 
     String userName;
-    String chatlog;
+    String password;
 
-    public String getChatlog() {
-        return chatlog;
+    public String getPassword() {
+        return password;
     }
 
-    public void setChatlog(String chatlog) {
-        this.chatlog = chatlog;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public ContentParcel(String userName, String log){
+    public ContentParcel(String userName, String password){
         this.userName = userName;
-        this.chatlog = log;
+        this.password = password;
 
     }
 
     public ContentParcel(Parcel parcel){
         this.userName = parcel.readString();
-        this.chatlog = parcel.readString();
+        this.password = parcel.readString();
 
     }
 
@@ -52,7 +52,7 @@ public class ContentParcel implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(userName);
-        dest.writeString(chatlog);
+        dest.writeString(password);
 
     }
 
