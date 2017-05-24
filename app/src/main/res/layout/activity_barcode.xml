@@ -81,17 +81,26 @@
         android:layout_width="match_parent"
         android:layout_height="80dp"></LinearLayout>
 
-    <Button
-        android:id="@+id/btnAddbook"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="등록" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
 
-    <Button
-        android:id="@+id/btnSetBookInfo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="갱신" />
+        <Button
+            android:id="@+id/btnSetBookInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="바코드 해석" />
+
+        <Button
+            android:id="@+id/btnAddbook"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="도서 등록" />
+
+    </LinearLayout>
+
+
 </LinearLayout>

@@ -10,7 +10,6 @@ import android.os.Parcelable;
 public class ContentParcel implements Parcelable {
 
     String userName;
-
     String chatlog;
 
     public String getChatlog() {

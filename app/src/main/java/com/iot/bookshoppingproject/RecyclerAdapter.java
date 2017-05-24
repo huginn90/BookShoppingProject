@@ -19,6 +19,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
         this.bookSet = bookSet;
     }
 
+
+
     @Override
     public RecycleViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         ViewGroup view = (ViewGroup) LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_list, parent, false);
@@ -36,6 +38,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
     @Override
     public int getItemCount() {
         return bookSet.size();
+    }
+
+    // 리사이클러뷰 업데이트를 위한 코드
+    public void upDateItemList(List<Book> bookset) {
+        this.bookSet = bookset;
+        notifyDataSetChanged();
     }
 
     class RecycleViewHolder extends RecyclerView.ViewHolder {

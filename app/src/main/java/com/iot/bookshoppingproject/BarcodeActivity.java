@@ -19,6 +19,7 @@ public class BarcodeActivity extends AppCompatActivity {
     EditText editTextISBN;
     String barcodeNumber;
     SQLiteDatabase db;
+    WebScraping webScraping;
 
     private void openDatabase(String DATABASE_NAME){
         try{
@@ -43,11 +44,10 @@ public class BarcodeActivity extends AppCompatActivity {
                     "insert into " + TABLE_NAME +
                     " ( title, price , barcode) " +
                     " values ( '" + title + "' , '" + price + "' , '"+ barcode +"'); ");
-            System.out.println("인서트 북");
         }catch (Exception e){
             Toast.makeText(
                     getApplicationContext(),
-                    "Insert 실패",
+                    "(동일한 도서가 존재합니다.)",
                     Toast.LENGTH_LONG
             ).show();
             e.printStackTrace();
@@ -64,7 +64,7 @@ public class BarcodeActivity extends AppCompatActivity {
             barcodeNumber = intent.getStringExtra("barcodeNumber");
         }
 
-        final WebScraping webScraping = new WebScraping(barcodeNumber);
+        webScraping = new WebScraping(barcodeNumber);
         webScraping.ThreadForwebconnect(barcodeNumber);
 
         openDatabase("store");
@@ -99,7 +99,6 @@ public class BarcodeActivity extends AppCompatActivity {
                     }
                 }
         );
-
 
     }
 }

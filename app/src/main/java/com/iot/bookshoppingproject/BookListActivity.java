@@ -26,8 +26,10 @@ public class BookListActivity extends AppCompatActivity {
     private static String DATABASE_NAME = "store";
     private static String TABLE_NAME = "books";
     TextView textViewTt;
-    String userName;
     SQLiteDatabase db;
+    RecyclerView recyclerView;
+    RecyclerAdapter recyclerAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,17 +65,22 @@ public class BookListActivity extends AppCompatActivity {
                 }
         );
 
-
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.Recyclerview);
+        recyclerView = (RecyclerView) findViewById(R.id.Recyclerview);
 
         BooklistSetData(TABLE_NAME);
-
-        recyclerView.setAdapter(new RecyclerAdapter(bookSet));
+        recyclerAdapter = new RecyclerAdapter(bookSet);
+        recyclerView.setAdapter(recyclerAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
+    }
 
-
+    // 리사이클러뷰 리스트 업데이트를 위한 코드
+    @Override
+    protected void onResume() {
+        super.onResume();
+        bookSet.clear();
+        recyclerAdapter.upDateItemList(BooklistSetData(TABLE_NAME));
     }
 
     private void openDatabase(String DATABASE_NAME){
@@ -109,7 +116,7 @@ public class BookListActivity extends AppCompatActivity {
     }
 
 
-    public void BooklistSetData(String TABLE_NAME) {
+    public ArrayList<Book> BooklistSetData(String TABLE_NAME) {
         String SQL = "select title, price, barcode " + " from " + TABLE_NAME;
         Cursor cursor = db.rawQuery(SQL, null);
 
@@ -119,10 +126,11 @@ public class BookListActivity extends AppCompatActivity {
             String title = cursor.getString(0);
             int price = cursor.getInt(1);
             String barcode = cursor.getString(2);
-            System.out.println("셀렉트 북");
             Book book = new Book(title, price, barcode);
             bookSet.add(book);
         }
+
+        return bookSet;
     }
 }
 
