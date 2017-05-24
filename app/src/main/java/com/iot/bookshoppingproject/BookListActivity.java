@@ -55,7 +55,7 @@ public class BookListActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         Intent intentAddBook = new Intent(
-                                getApplicationContext(), AddBookActivity.class
+                                getApplicationContext(), CameraActivity.class
                         );
                         startActivityForResult(intentAddBook, 100);
                     }
