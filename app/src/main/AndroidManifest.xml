@@ -29,6 +29,9 @@
         <activity android:name=".BookListActivity">
 
         </activity>
+        <activity android:name=".ClientBuyActivity">
+
+        </activity>
         <activity android:name=".CameraActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -4,7 +4,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -23,15 +22,15 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
 
     @Override
     public RecycleViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        ViewGroup view = (ViewGroup) LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_list, parent, false);
+        ViewGroup view = (ViewGroup) LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_item, parent, false);
         return new RecycleViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final RecycleViewHolder holder, final int position) {
         Book book = bookSet.get(position);
-        holder.button.setText(book.getBookTitle());
-        holder.textView.setText(book.getBookPrice()+" 원");
+        holder.textViewTitle.setText(book.getBookTitle());
+        holder.textViewPrice.setText(book.getBookPrice()+" 원");
 
     }
 
@@ -48,13 +47,13 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
 
     class RecycleViewHolder extends RecyclerView.ViewHolder {
 
-        Button button;
-        TextView textView;
+        TextView textViewTitle;
+        TextView textViewPrice;
 
         public RecycleViewHolder(View itemView) {
             super(itemView);
-            button = (Button) itemView.findViewById(R.id.button);
-            textView = (TextView) itemView.findViewById(R.id.textView);
+            textViewTitle = (TextView) itemView.findViewById(R.id.textViewTitle);
+            textViewPrice = (TextView) itemView.findViewById(R.id.textViewPrice);
         }
 
 
