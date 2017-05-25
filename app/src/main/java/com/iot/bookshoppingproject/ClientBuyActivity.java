@@ -77,13 +77,17 @@ public class ClientBuyActivity extends AppCompatActivity{
                         rightListener); // 오른쪽 버튼 이벤트
                 mPopupActivity.show();
                 break;
+
+            case R.id.button_exit:
+
+                this.finish();
         }
     }
 
     private View.OnClickListener leftListener = new View.OnClickListener() {
         public void onClick(View v) {
             // TODO : 디비에서 해당되는 책을 delete
-            Toast.makeText(getApplicationContext(), "왼쪽버튼 클릭",
+            Toast.makeText(getApplicationContext(), "구매하셨습니다. 감사합니다",
                     Toast.LENGTH_SHORT).show();
             mPopupActivity.dismiss();
         }
@@ -91,7 +95,7 @@ public class ClientBuyActivity extends AppCompatActivity{
 
     private View.OnClickListener rightListener = new View.OnClickListener() {
         public void onClick(View v) {
-            Toast.makeText(getApplicationContext(), "취소버튼 클릭",
+            Toast.makeText(getApplicationContext(), "취소되었습니다.",
                     Toast.LENGTH_SHORT).show();
             mPopupActivity.dismiss();
         }
