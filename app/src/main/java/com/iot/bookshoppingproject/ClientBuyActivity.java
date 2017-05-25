@@ -54,14 +54,14 @@ public class ClientBuyActivity extends AppCompatActivity {
         public void onClick(View v) {
             if(userName.equals("admin")) {
                 deleteBook();
-                Toast.makeText(getApplicationContext(), "삭제버튼 클릭",
+                Toast.makeText(getApplicationContext(), "삭제완료",
                         Toast.LENGTH_SHORT).show();
                 mPopupActivity.dismiss();
                 finish();
             }
             else {
                 deleteBook();
-                Toast.makeText(getApplicationContext(), "구매버튼 클릭",
+                Toast.makeText(getApplicationContext(), "구매완료",
                         Toast.LENGTH_SHORT).show();
                 mPopupActivity.dismiss();
                 finish();
@@ -72,10 +72,9 @@ public class ClientBuyActivity extends AppCompatActivity {
 
     private View.OnClickListener rightListener = new View.OnClickListener() {
         public void onClick(View v) {
-            Toast.makeText(getApplicationContext(), "취소버튼 클릭",
-                    Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getApplicationContext(), "취소버튼 클릭",
+//                    Toast.LENGTH_SHORT).show();
             mPopupActivity.dismiss();
-            finish();
         }
     };
 
@@ -105,6 +104,15 @@ public class ClientBuyActivity extends AppCompatActivity {
         textViewPrice = (TextView) findViewById(R.id.textViewPrice);
         Button buttonBuy = (Button) findViewById(R.id.button_buy);
         Button buttonExit = (Button) findViewById(R.id.button_exit);
+
+        buttonExit.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        finish();
+                    }
+                }
+        );
 
         imageViewBook.setImageBitmap(bitmap);
         textViewTitle.setText(bookTitle);
