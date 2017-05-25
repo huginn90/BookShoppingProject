@@ -22,18 +22,62 @@ import java.net.URL;
  * Created by CHJ on 2017-05-24.
  */
 
-public class ClientBuyActivity extends AppCompatActivity{
+public class ClientBuyActivity extends AppCompatActivity {
 
     ImageView imageViewBook;
     TextView textViewTitle;
     TextView textViewPrice;
     String barcodeNumber;
     String bookTitle;
+    String userName;
     int bookPrice;
     SQLiteDatabase db;
     private Bitmap bitmap;
 
     private PopupActivity mPopupActivity;
+
+
+    //    public void onClickView(View v) {
+//        switch (v.getId()) {
+//            case R.id.button_buy:
+//                mPopupActivity = new PopupActivity(this,
+//                        "[구매 확인]", // 제목
+//                        "구매하시겠습니까?", // 내용
+//                        leftListener, // 왼쪽 버튼 이벤트
+//                        rightListener); // 오른쪽 버튼 이벤트
+//                mPopupActivity.show();
+//                break;
+//        }
+//    }
+
+    private View.OnClickListener leftListener = new View.OnClickListener() {
+        public void onClick(View v) {
+            if(userName.equals("admin")) {
+                deleteBook();
+                Toast.makeText(getApplicationContext(), "삭제버튼 클릭",
+                        Toast.LENGTH_SHORT).show();
+                mPopupActivity.dismiss();
+                finish();
+            }
+            else {
+                deleteBook();
+                Toast.makeText(getApplicationContext(), "구매버튼 클릭",
+                        Toast.LENGTH_SHORT).show();
+                mPopupActivity.dismiss();
+                finish();
+            }
+
+        }
+    };
+
+    private View.OnClickListener rightListener = new View.OnClickListener() {
+        public void onClick(View v) {
+            Toast.makeText(getApplicationContext(), "취소버튼 클릭",
+                    Toast.LENGTH_SHORT).show();
+            mPopupActivity.dismiss();
+            finish();
+        }
+    };
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -41,10 +85,11 @@ public class ClientBuyActivity extends AppCompatActivity{
         setContentView(R.layout.activity_clientbuy);
 
         Intent intent = getIntent();
-        if(intent != null) {
+        if (intent != null) {
             barcodeNumber = intent.getStringExtra("barcodeNumber");
             bookTitle = intent.getStringExtra("booktitle");
             bookPrice = intent.getIntExtra("bookprice", 0);
+            userName = intent.getStringExtra("username");
         }
 
         openDatabase("store");
@@ -63,13 +108,25 @@ public class ClientBuyActivity extends AppCompatActivity{
 
         imageViewBook.setImageBitmap(bitmap);
         textViewTitle.setText(bookTitle);
-        textViewPrice.setText(bookPrice+" 원");
+        textViewPrice.setText(bookPrice + " 원");
+        if(userName.equals("admin")) {
+            buttonBuy.setText("책 삭제");
+        }
 
     }
 
     public void onClickView(View v) {
-        switch (v.getId()) {
-            case R.id.button_buy:
+        switch (userName) {
+            case "admin":
+                mPopupActivity = new PopupActivity(this,
+                        "[삭제 확인]", // 제목
+                        "삭제하시겠습니까?", // 내용
+                        leftListener, // 왼쪽 버튼 이벤트
+                        rightListener); // 오른쪽 버튼 이벤트
+                mPopupActivity.show();
+                break;
+
+            default:
                 mPopupActivity = new PopupActivity(this,
                         "[구매 확인]", // 제목
                         "구매하시겠습니까?", // 내용
@@ -77,38 +134,16 @@ public class ClientBuyActivity extends AppCompatActivity{
                         rightListener); // 오른쪽 버튼 이벤트
                 mPopupActivity.show();
                 break;
-
-            case R.id.button_exit:
-
-                this.finish();
         }
     }
 
-    private View.OnClickListener leftListener = new View.OnClickListener() {
-        public void onClick(View v) {
-            // TODO : 디비에서 해당되는 책을 delete
-            Toast.makeText(getApplicationContext(), "구매하셨습니다. 감사합니다",
-                    Toast.LENGTH_SHORT).show();
-            mPopupActivity.dismiss();
-        }
-    };
-
-    private View.OnClickListener rightListener = new View.OnClickListener() {
-        public void onClick(View v) {
-            Toast.makeText(getApplicationContext(), "취소되었습니다.",
-                    Toast.LENGTH_SHORT).show();
-            mPopupActivity.dismiss();
-        }
-    };
-
-
-    private void openDatabase(String DATABASE_NAME){
-        try{
+    private void openDatabase(String DATABASE_NAME) {
+        try {
             db = openOrCreateDatabase(
                     DATABASE_NAME,
                     Activity.MODE_PRIVATE,
                     null);
-        }catch (Exception e){
+        } catch (Exception e) {
             Toast.makeText(
                     getApplicationContext(),
                     "DB 오픈 실패",
@@ -119,11 +154,16 @@ public class ClientBuyActivity extends AppCompatActivity{
         }
     }
 
+    public void deleteBook() {
+        String sql = "delete from books where barcode = '"+barcodeNumber+"'";
+        db.execSQL(sql);
+    }
+
     public void getBookimageThread(final String barcode) throws InterruptedException {
         Thread thread = new Thread() {
             public void run() {
                 try {
-                    URL url = new URL("http://t1.daumcdn.net/book/KOR"+barcode);
+                    URL url = new URL("http://t1.daumcdn.net/book/KOR" + barcode);
 
                     HttpURLConnection con = (HttpURLConnection) url.openConnection();
                     con.setDoInput(true);

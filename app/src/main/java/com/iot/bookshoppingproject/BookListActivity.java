@@ -25,10 +25,9 @@ import static java.sql.DriverManager.println;
 
 public class BookListActivity extends AppCompatActivity {
 
-    ArrayList<Book> bookSet = new ArrayList<>();
-
     private static String DATABASE_NAME = "store";
     private static String TABLE_NAME = "books";
+    ArrayList<Book> bookSet = new ArrayList<>();
     TextView textViewTt;
     SQLiteDatabase db;
     RecyclerView recyclerView;
@@ -47,12 +46,12 @@ public class BookListActivity extends AppCompatActivity {
         Button button = (Button) findViewById(R.id.button_addbook);
         final Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        ContentParcel content3 = (ContentParcel) bundle.getParcelable("title");
+        final ContentParcel content3 = (ContentParcel) bundle.getParcelable("title");
 
-        if(content3.getTitle().equals("admin")){
+        if (content3.getTitle().equals("admin")) {
             textViewTt.setText("[        모           드      -       관           리           자      ]");
             button.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             textViewTt.setText("[        모           드      -       사           용           자      ]");
             button.setVisibility(View.INVISIBLE);
         }
@@ -76,22 +75,28 @@ public class BookListActivity extends AppCompatActivity {
         recyclerView.setAdapter(recyclerAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+
         recyclerView.addOnItemTouchListener(new RecycleViewItemClickListener(getApplicationContext(), recyclerView,
-                new RecycleViewItemClickListener.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(View v, int position) {
-                        // 상세화면으로 아이템 정보를 넘김.
-                        Intent intentitem = new Intent(getApplicationContext(), ClientBuyActivity.class);
-                        Book book = bookSet.get(position);
-                        intentitem.putExtra("barcodeNumber", book.getBookbarcode());
-                        intentitem.putExtra("booktitle", book.getBookTitle());
-                        intentitem.putExtra("bookprice", book.getBookPrice());
-                        startActivity(intentitem);
-                    }
-                    @Override
-                    public void onItemLongClick(View v, int position) {
-                    }
-                }));
+                        new RecycleViewItemClickListener.OnItemClickListener() {
+
+                            @Override
+                            public void onItemClick(View v, int position) {
+                                // 상세화면으로 아이템 정보를 넘김.
+                                Intent intentitem = new Intent(getApplicationContext(), ClientBuyActivity.class);
+                                Book book = bookSet.get(position);
+                                intentitem.putExtra("barcodeNumber", book.getBookbarcode());
+                                intentitem.putExtra("booktitle", book.getBookTitle());
+                                intentitem.putExtra("bookprice", book.getBookPrice());
+                                intentitem.putExtra("username", content3.getTitle());
+                                startActivity(intentitem);
+                            }
+
+                            @Override
+                            public void onItemLongClick(View v, int position) {
+                            }
+                        }
+                )
+        );
 
     }
 
@@ -103,13 +108,13 @@ public class BookListActivity extends AppCompatActivity {
         recyclerAdapter.upDateItemList(BooklistSetData(TABLE_NAME));
     }
 
-    private void openDatabase(String DATABASE_NAME){
-        try{
+    private void openDatabase(String DATABASE_NAME) {
+        try {
             db = openOrCreateDatabase(
                     DATABASE_NAME,
                     Activity.MODE_PRIVATE,
                     null);
-        }catch (Exception e){
+        } catch (Exception e) {
             Toast.makeText(
                     getApplicationContext(),
                     "DB 오픈 실패",
@@ -120,7 +125,7 @@ public class BookListActivity extends AppCompatActivity {
         }
     }
 
-    private void createTable(String TABLE_NAME){
+    private void createTable(String TABLE_NAME) {
         try {
             db.execSQL("create table if not exists " + TABLE_NAME +
                     " ( " +
@@ -128,7 +133,7 @@ public class BookListActivity extends AppCompatActivity {
                     " price int, " +
                     " barcode text PRIMARY KEY);"
             );
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             println(TABLE_NAME + " 테이블 생성 실패");
             println((e.getMessage().toString()));
