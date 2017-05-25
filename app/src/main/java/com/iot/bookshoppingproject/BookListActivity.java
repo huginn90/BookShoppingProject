@@ -64,7 +64,7 @@ public class BookListActivity extends AppCompatActivity {
                         Intent intentAddBook = new Intent(
                                 getApplicationContext(), CameraActivity.class
                         );
-                        startActivityForResult(intentAddBook, 100);
+                        startActivity(intentAddBook);
                     }
                 }
         );
@@ -80,10 +80,12 @@ public class BookListActivity extends AppCompatActivity {
                 new RecycleViewItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View v, int position) {
-                        // 상세화면으로 바코드 번호를 넘김.
+                        // 상세화면으로 아이템 정보를 넘김.
                         Intent intentitem = new Intent(getApplicationContext(), ClientBuyActivity.class);
                         Book book = bookSet.get(position);
                         intentitem.putExtra("barcodeNumber", book.getBookbarcode());
+                        intentitem.putExtra("booktitle", book.getBookTitle());
+                        intentitem.putExtra("bookprice", book.getBookPrice());
                         startActivity(intentitem);
                     }
                     @Override

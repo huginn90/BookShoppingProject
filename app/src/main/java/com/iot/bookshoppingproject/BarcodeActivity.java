@@ -72,22 +72,11 @@ public class BarcodeActivity extends AppCompatActivity {
         editTextPrice = (EditText) findViewById(R.id.editTextPrice);
         editTextISBN = (EditText) findViewById(R.id.editTextBarcode);
         Button buttonAddBook = (Button) findViewById(R.id.btnAddbook);
-//        Button buttonSetBookInfo = (Button) findViewById(R.id.btnSetBookInfo);
 
         editTextTitle.setText(webScraping.getTitle());
         editTextPrice.setText(""+webScraping.getPrice());
         editTextISBN.setText(webScraping.getISBNnumber());
 
-//        buttonSetBookInfo.setOnClickListener(
-//                new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        editTextTitle.setText(webScraping.getTitle());
-//                        editTextPrice.setText(""+webScraping.getPrice());
-//                        editTextISBN.setText(webScraping.getISBNnumber());
-//                    }
-//                }
-//        );
 
         buttonAddBook.setOnClickListener(
                 new View.OnClickListener() {
