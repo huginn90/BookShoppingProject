@@ -59,7 +59,7 @@ public class BarcodeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_barcode);
 
-        Intent intent = getIntent();
+        final Intent intent = getIntent();
         if(intent != null) {
             barcodeNumber = intent.getStringExtra("barcodeNumber");
         }
@@ -87,7 +87,8 @@ public class BarcodeActivity extends AppCompatActivity {
                         String barcode = editTextISBN.getText().toString();
                         insertBook("books", title, price, barcode);
 
-                        finish();
+                        Intent intent1 = new Intent(getApplicationContext(), BookListActivity.class);
+                        startActivity(intent);
 
                     }
                 }
