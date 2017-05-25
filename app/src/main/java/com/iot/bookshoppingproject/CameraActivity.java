@@ -1,9 +1,7 @@
 package com.iot.bookshoppingproject;
 // camera commit 다시
+
 import android.app.Activity;
-
-
-
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
