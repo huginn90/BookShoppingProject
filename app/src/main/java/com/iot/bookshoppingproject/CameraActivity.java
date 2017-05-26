@@ -79,7 +79,7 @@ public class CameraActivity extends Activity {
     Camera.AutoFocusCallback mAutoFocus = new Camera.AutoFocusCallback() {
 
         public void onAutoFocus(boolean success, Camera camera) {
-            mShutter.setEnabled(true);
+//            mShutter.setEnabled(true);
             mSurface.mCamera.takePicture(null, null, mPicture);
 
         }

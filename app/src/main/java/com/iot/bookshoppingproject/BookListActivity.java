@@ -123,7 +123,6 @@ public class BookListActivity extends AppCompatActivity {
             Book book = new Book(title, price, barcode);
             bookSet.add(book);
         }
-
         return bookSet;
     }
 

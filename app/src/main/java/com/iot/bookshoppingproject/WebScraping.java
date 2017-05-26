@@ -57,8 +57,9 @@ public class WebScraping {
             e.printStackTrace();
         }
 
-        Pattern pattern_title = Pattern.compile("<meta property=\"og:title\" content=\"([^>]+)\">"); // 책제목을 찾기위한 정규식
-        Pattern pattern_price = Pattern.compile("<del>([^<]+)</del>"); // 책가격을 찾기위한 정규식
+        // Pattern으로 HTML에서 책제목, 가격을 추출.
+        Pattern pattern_title = Pattern.compile("<meta property=\"og:title\" content=\"([^\"]+)\">");
+        Pattern pattern_price = Pattern.compile("<del>([^<]+)</del>");
 
         Matcher matcher_title = pattern_title.matcher(result);
         Matcher matcher_price = pattern_price.matcher(result);
@@ -79,7 +80,7 @@ public class WebScraping {
             System.out.println("매칭 가격 없음");
 
     }
-
+    // 안드로이드에서 URL에 접속하기위해 쓰레드 생성.
     public void ThreadForwebconnect(final String barcodenumber) {
         Thread thread = new Thread() {
             public void run() {
@@ -87,15 +88,11 @@ public class WebScraping {
                 getBookInfoUseURL(url);
             }
         };
-
         thread.start();
-
         try {
             thread.join();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
     }
-
 }
