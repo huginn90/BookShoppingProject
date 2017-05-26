@@ -1,7 +1,6 @@
 package com.iot.bookshoppingproject;
 // 1
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -16,19 +15,18 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import static com.iot.bookshoppingproject.R.id.UserText;
-import static java.sql.DriverManager.println;
 
 public class BookListActivity extends AppCompatActivity {
 
-    private static String DATABASE_NAME = "store";
+    /*private static String DATABASE_NAME = "store";*/
     private static String TABLE_NAME = "books";
     ArrayList<Book> bookSet = new ArrayList<>();
     TextView textViewTt;
+    BookDBHelper dbHelper;
     SQLiteDatabase db;
     RecyclerView recyclerView;
     RecyclerAdapter recyclerAdapter;
@@ -39,8 +37,7 @@ public class BookListActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_booklist);
-        openDatabase(DATABASE_NAME);
-        createTable(TABLE_NAME);
+        openDatabase();
 
         textViewTt = (TextView) findViewById(UserText);
         Button button = (Button) findViewById(R.id.button_addbook);
@@ -108,38 +105,10 @@ public class BookListActivity extends AppCompatActivity {
         recyclerAdapter.upDateItemList(BooklistSetData(TABLE_NAME));
     }
 
-    private void openDatabase(String DATABASE_NAME) {
-        try {
-            db = openOrCreateDatabase(
-                    DATABASE_NAME,
-                    Activity.MODE_PRIVATE,
-                    null);
-        } catch (Exception e) {
-            Toast.makeText(
-                    getApplicationContext(),
-                    "DB 오픈 실패",
-                    Toast.LENGTH_LONG
-            ).show();
-            e.printStackTrace();
-            e.getMessage().toString();
-        }
+    private void openDatabase(){
+        dbHelper = new BookDBHelper(this);
+        db = dbHelper.getWritableDatabase();
     }
-
-    private void createTable(String TABLE_NAME) {
-        try {
-            db.execSQL("create table if not exists " + TABLE_NAME +
-                    " ( " +
-                    " title text, " +
-                    " price int, " +
-                    " barcode text PRIMARY KEY);"
-            );
-        } catch (Exception e) {
-            e.printStackTrace();
-            println(TABLE_NAME + " 테이블 생성 실패");
-            println((e.getMessage().toString()));
-        }
-    }
-
 
     public ArrayList<Book> BooklistSetData(String TABLE_NAME) {
         String SQL = "select title, price, barcode " + " from " + TABLE_NAME;

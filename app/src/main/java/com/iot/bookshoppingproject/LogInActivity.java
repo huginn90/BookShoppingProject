@@ -1,6 +1,5 @@
 package com.iot.bookshoppingproject;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -17,20 +16,20 @@ import android.widget.Toast;
 
 public class LogInActivity extends AppCompatActivity {
 
-    private static String DATABASE_NAME = "store";
     private static String TABLE_NAME = "customer";
     public static final String LoginId = "admin";
     public static final String LiginPW = "admin";
 
     EditText NameInput;
     EditText PasswordInput;
-    SQLiteDatabase db;
+    private BookDBHelper dbHelper;
+    private SQLiteDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
-        openDatabase(DATABASE_NAME);
+        openDatabase();
 
         NameInput = (EditText)findViewById(R.id.userNameInput);
         PasswordInput = (EditText)findViewById(R.id.passwordInput);
@@ -85,21 +84,9 @@ public class LogInActivity extends AppCompatActivity {
         );
     }
 
-    private void openDatabase(String DATABASE_NAME){
-        try{
-            db = openOrCreateDatabase(
-                    DATABASE_NAME,
-                    Activity.MODE_PRIVATE,
-                    null);
-        }catch (Exception e){
-            Toast.makeText(
-                    getApplicationContext(),
-                    "DB 오픈 실패",
-                    Toast.LENGTH_LONG
-            ).show();
-            e.printStackTrace();
-            e.getMessage().toString();
-        }
+    private void openDatabase(){
+        dbHelper = new BookDBHelper(this);
+        db = dbHelper.getWritableDatabase();
     }
 
     private boolean executeLogIn(String TABLE_NAME, String _id, String password){

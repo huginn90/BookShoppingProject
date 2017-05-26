@@ -1,7 +1,6 @@
 package com.iot.bookshoppingproject;
 // 1
 
-import android.app.Activity;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -18,24 +17,13 @@ public class BarcodeActivity extends AppCompatActivity {
     EditText editTextPrice;
     EditText editTextISBN;
     String barcodeNumber;
+    BookDBHelper dbHelper;
     SQLiteDatabase db;
     WebScraping webScraping;
 
-    private void openDatabase(String DATABASE_NAME){
-        try{
-            db = openOrCreateDatabase(
-                    DATABASE_NAME,
-                    Activity.MODE_PRIVATE,
-                    null);
-        }catch (Exception e){
-            Toast.makeText(
-                    getApplicationContext(),
-                    "DB 오픈 실패",
-                    Toast.LENGTH_LONG
-            ).show();
-            e.printStackTrace();
-            e.getMessage().toString();
-        }
+    private void openDatabase(){
+        dbHelper = new BookDBHelper(this);
+        db = dbHelper.getWritableDatabase();
     }
 
     private void insertBook(String TABLE_NAME, String title, int price, String barcode){
@@ -67,7 +55,7 @@ public class BarcodeActivity extends AppCompatActivity {
         webScraping = new WebScraping(barcodeNumber);
         webScraping.ThreadForwebconnect(barcodeNumber);
 
-        openDatabase("store");
+        openDatabase();
         editTextTitle = (EditText) findViewById(R.id.editTextTitle);
         editTextPrice = (EditText) findViewById(R.id.editTextPrice);
         editTextISBN = (EditText) findViewById(R.id.editTextBarcode);
@@ -87,8 +75,7 @@ public class BarcodeActivity extends AppCompatActivity {
                         String barcode = editTextISBN.getText().toString();
                         insertBook("books", title, price, barcode);
 
-                        Intent intent1 = new Intent(getApplicationContext(), BookListActivity.class);
-                        startActivity(intent);
+                        finish();
 
                     }
                 }
