@@ -87,8 +87,8 @@ public class BarcodeActivity extends AppCompatActivity {
                         String barcode = editTextISBN.getText().toString();
                         insertBook("books", title, price, barcode);
 
-                        Intent intent1 = new Intent(getApplicationContext(), BookListActivity.class);
-                        startActivity(intent);
+                        Intent intentTolist = new Intent(getApplicationContext(), BookListActivity.class);
+                        startActivity(intentTolist);
 
                     }
                 }

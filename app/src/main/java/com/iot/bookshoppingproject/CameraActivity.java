@@ -109,7 +109,9 @@ public class CameraActivity extends Activity {
             intent.setData(uri);
             sendBroadcast(intent);
 
+            Toast.makeText(getApplicationContext(), "사진이 저장 되었습니다"+file.getAbsolutePath(), Toast.LENGTH_LONG).show();
             camera.startPreview();
+
 
             barcodeNumber = DecodeBarcode(file.getAbsolutePath());
 
