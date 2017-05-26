@@ -50,13 +50,12 @@ public class CameraActivity extends Activity {
                 }
         );
 
-        mShutter.setOnClickListener(new Button.OnClickListener() {
-            public void onClick(View v) {
-                // 사진을 촬영
-                mSurface.mCamera.autoFocus(mAutoFocus);
-
-            }
-        });
+//        mShutter.setOnClickListener(new Button.OnClickListener() {
+//            public void onClick(View v) {
+//                // 사진을 촬영
+//
+//            }
+//        });
 
         //저장할 공간 /mnt/sdcard/CameraTest 이렇게 폴더 안에 파일이 생성된다
         mRootPath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + PICFOLDER;
@@ -71,11 +70,16 @@ public class CameraActivity extends Activity {
             }
         }
     }
+
+    public void onClickcapture(View v) {
+        mSurface.mCamera.autoFocus(mAutoFocus);
+    }
+
     // 포커싱 성공하면 촬영 허가
     Camera.AutoFocusCallback mAutoFocus = new Camera.AutoFocusCallback() {
 
         public void onAutoFocus(boolean success, Camera camera) {
-            mShutter.setEnabled(success);
+            mShutter.setEnabled(true);
             mSurface.mCamera.takePicture(null, null, mPicture);
 
         }
@@ -105,7 +109,6 @@ public class CameraActivity extends Activity {
             intent.setData(uri);
             sendBroadcast(intent);
 
-            Toast.makeText(getApplicationContext(), "사진이 저장 되었습니다"+file.getAbsolutePath(), Toast.LENGTH_LONG).show();
             camera.startPreview();
 
             barcodeNumber = DecodeBarcode(file.getAbsolutePath());
@@ -118,7 +121,6 @@ public class CameraActivity extends Activity {
             else {
                 Toast.makeText(getApplicationContext(), "다시 촬영", Toast.LENGTH_LONG).show();
             }
-
         }
 
     };
