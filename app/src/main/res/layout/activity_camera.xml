@@ -48,14 +48,11 @@
 
 
     <Button
-
         android:id="@+id/button_capture"
-
         android:layout_width="0dp"
-
         android:layout_height="wrap_content"
-
         android:text="사진찍기"
+        android:onClick="onClickcapture"
         tools:layout_constraintTop_creator="1"
         tools:layout_constraintRight_creator="1"
         tools:layout_constraintLeft_creator="1"
