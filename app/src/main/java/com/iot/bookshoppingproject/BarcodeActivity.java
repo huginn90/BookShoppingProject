@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 public class BarcodeActivity extends AppCompatActivity {
 
+    
     EditText editTextTitle;
     EditText editTextPrice;
     EditText editTextISBN;
