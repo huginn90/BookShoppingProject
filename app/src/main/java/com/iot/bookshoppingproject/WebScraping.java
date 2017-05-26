@@ -57,8 +57,8 @@ public class WebScraping {
             e.printStackTrace();
         }
 
-        Pattern pattern_title = Pattern.compile("<meta[^>]*property=[\"]og:title[\"][^>]*content=[\"]?([^>]+)[\"]>"); // 책제목을 찾기위한 정규식
-        Pattern pattern_price = Pattern.compile("<del>?([^>\"']+)</del>"); // 책가격을 찾기위한 정규식
+        Pattern pattern_title = Pattern.compile("<meta property=\"og:title\" content=\"([^>]+)\">"); // 책제목을 찾기위한 정규식
+        Pattern pattern_price = Pattern.compile("<del>([^<]+)</del>"); // 책가격을 찾기위한 정규식
 
         Matcher matcher_title = pattern_title.matcher(result);
         Matcher matcher_price = pattern_price.matcher(result);
