@@ -27,5 +27,33 @@ public class BookDBHelper extends SQLiteOpenHelper{
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         onCreate(db);
     }
+
+    public boolean insertRecord(SQLiteDatabase db, String TABLE_NAME, String _id, String password){
+        try {
+            db.execSQL("" +
+                    "insert into " + TABLE_NAME +
+                    " ( _id, password ) " +
+                    " values ( '" + _id + "' , '" + password + "'); ");
+        }catch (Exception e){
+            e.printStackTrace();
+            e.getMessage().toString();
+            return false;
+        }
+        return true;
+    }
+
+    public boolean insertBook(SQLiteDatabase db, String TABLE_NAME, String title, int price, String barcode){
+        try {
+            db.execSQL("" +
+                    "insert into " + TABLE_NAME +
+                    " ( title, price , barcode) " +
+                    " values ( '" + title + "' , '" + price + "' , '"+ barcode +"'); ");
+        }catch (Exception e){
+            e.printStackTrace();
+            e.getMessage().toString();
+            return false;
+        }
+        return true;
+    }
 }
 

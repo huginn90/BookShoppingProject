@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 public class BarcodeActivity extends AppCompatActivity {
 
-    
+
     EditText editTextTitle;
     EditText editTextPrice;
     EditText editTextISBN;
@@ -25,22 +25,6 @@ public class BarcodeActivity extends AppCompatActivity {
     private void openDatabase(){
         dbHelper = new BookDBHelper(this);
         db = dbHelper.getWritableDatabase();
-    }
-
-    private void insertBook(String TABLE_NAME, String title, int price, String barcode){
-        try {
-            db.execSQL("" +
-                    "insert into " + TABLE_NAME +
-                    " ( title, price , barcode) " +
-                    " values ( '" + title + "' , '" + price + "' , '"+ barcode +"'); ");
-        }catch (Exception e){
-            Toast.makeText(
-                    getApplicationContext(),
-                    "(동일한 도서가 존재합니다.)",
-                    Toast.LENGTH_LONG
-            ).show();
-            e.printStackTrace();
-        }
     }
 
     @Override
@@ -74,10 +58,11 @@ public class BarcodeActivity extends AppCompatActivity {
                         String title = editTextTitle.getText().toString();
                         int price = Integer.parseInt(editTextPrice.getText().toString());
                         String barcode = editTextISBN.getText().toString();
-                        insertBook("books", title, price, barcode);
-
+                        boolean result = dbHelper.insertBook(db, "books", title, price, barcode);
+                        if(!result){
+                            Toast.makeText(getApplicationContext(), "동일한 책이 존재합니다.", Toast.LENGTH_LONG).show();
+                        }
                         finish();
-
                     }
                 }
         );

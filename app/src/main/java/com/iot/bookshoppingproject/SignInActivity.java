@@ -48,50 +48,25 @@ public class SignInActivity extends AppCompatActivity{
                         _id = editTextID.getText().toString();
                         password = editTextPW.getText().toString();
 
-                        insertRecord(TABLE_NAME, _id, password);
+                        boolean result = dbHelper.insertRecord(db, TABLE_NAME, _id, password);
+                        if(result){
+                            Toast.makeText(getApplicationContext(), "삽입 성공", Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(getApplicationContext(), "삽입 실패", Toast.LENGTH_LONG).show();
+                        }
                         finish();
                     }
                 }
         );
     }
 
-    private void insertRecord(String TABLE_NAME, String _id, String password){
-        try {
-            db.execSQL("" +
-                    "insert into " + TABLE_NAME +
-                    " ( _id, password ) " +
-                    " values ( '" + _id + "' , '" + password + "'); ");
-        }catch (Exception e){
-            Toast.makeText(
-                    getApplicationContext(),
-                    "Insert 실패",
-                    Toast.LENGTH_LONG
-            ).show();
-            e.printStackTrace();
-            e.getMessage().toString();
-        }
-    }
-
     private void checkingID(String TABLE_NAME, String _id){
-        Cursor cursor = db.rawQuery(
-                " select _id from " +
-                        TABLE_NAME +
-                        " where _id like " + "'" + _id + "'"
-                        , null
-        );
+        Cursor cursor = db.rawQuery(" select _id from " + TABLE_NAME + " where _id like " + "'" + _id + "'", null);
         int recordCount = cursor.getCount();
         if(recordCount > 0){
-            Toast.makeText(
-                    getApplicationContext(),
-                    "아이디를 생성할 수 없습니다.",
-                    Toast.LENGTH_LONG
-            ).show();
+            Toast.makeText(getApplicationContext(), "아이디를 생성할 수 없습니다.", Toast.LENGTH_LONG).show();
         } else{
-            Toast.makeText(
-                    getApplicationContext(),
-                    "아이디를 생성할 수 있습니다.",
-                    Toast.LENGTH_LONG
-            ).show();
+            Toast.makeText(getApplicationContext(), "아이디를 생성할 수 있습니다.", Toast.LENGTH_LONG).show();
         }
     }
 
